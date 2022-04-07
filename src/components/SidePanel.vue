@@ -80,7 +80,11 @@ onMounted(() => {
 function create() {
 	modal.value.hide();
 	server.apiCreateNote(newTitle.value).then((data) => {
+		//store.state.notes.push(data);
+		//An example of something you CAN'T do. state is readonly from Vue, so any manipulation
+		// of it outside of the mutators won't work. Instead we...
 		store.addNote(data);
+
 		newTitle.value = ''; // Again, note that you have to use .value when dealing with ref's in the script section
 	});
 }
