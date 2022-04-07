@@ -13,54 +13,57 @@
 -->
 
 <template>
-	<div>
-		<nav class="navbar navbar-light bg-light">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Boilerplate Notes</a>
-			</div>
-		</nav>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-3">
-					<side-panel />
-				</div>
-				<div class="col">
-					<view-port />
-				</div>
-			</div>
-		</div>
-	</div>
+  <div>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          href="#"
+        >Boilerplate Notes</a>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3">
+          <side-panel />
+        </div>
+        <div class="col">
+          <view-port />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-// When using components, you MUST tell Vue that they exist by importing them and then referencing them in "components"
+<script setup>
+// Notice we have "setup" specified above. This is a new helper for Vue 3 Composition API Single File Components.
+// The benefit of using it is that EVERYTHING defined below is now available in the template above. It's like having
+// data, created, and actions from Vue 2 all rolled into one!
+
+// When using components, you MUST tell Vue that they exist by importing them. They'll then be available as HTML tags in the template above.
 // If your component doesn't render, you most likely skipped that step.
 import SidePanel from './SidePanel.vue';
 import ViewPort from './ViewPort.vue';
+
+// Aside from the two tags, we don't have any real "state" we have to worry about. However, rather than delegating note loading
+// to some random component, we'll do our request for all of the notes we have stored here. To do so, we'll use a "composable" which is
+// similar to Vue 2 mixins.
+
 // Here we bring in our server API. Rather than duplicating HTML calls across multiple modules, we consolidate them into a
 // simple JS file and import it as a mixin here. See the Vue documentation on mixins. What's important is that any of the "methods"
 // defined in ServerApi are now going to be available in our SFC.
-import ServerApi from '../helpers/mixinServerApi.js';
+import { useServerApi } from '../helpers/composableServerApi';
+const server = useServerApi();
+// Bring in state
+import { useStore } from '../helpers/store';
+const store = useStore();
 
-export default {
-	components: {
-		// Here we specify the components that will be used above. Note that they are camel-cased here but are kebab-cased as tags.
-		SidePanel,
-		ViewPort,
-	},
-	// This binds ServerApi's methods with our own
-	mixins: [ServerApi],
-	// Created is one of the Vue lifecyle functions. This occurs once for this module, when it is initially created but prior to being
-	// rendered. We'll use it to initialize our state from the server.
-	created() {
-		// Under the hood, our api calls are using the browser "fetch" method. See the MDN for more on fetch. Fetch returns a Promise
-		// which we wait for with .then and then act on. The API call hides some of this so the result of this Promise is the full list of notes.
-		this.apiGetAll().then((result) => {
-			// See Vuex for details. Here we set the state by setting all of the notes to the array we just got back from the server.
-			this.$store.commit('addNotes', result.notes);
-		});
-	},
-};
+// Under the hood, our api calls are using the browser "fetch" method. See the MDN for more on fetch. Fetch returns a Promise
+// which we wait for with .then and then act on. The API call hides some of this so the result of this Promise is the full list of notes.
+server.apiGetAll().then((result) => {
+	// Here we set the state by setting all of the notes to the array we just got back from the server.
+	store.addNotes(result.notes);
+});
 </script>
 
 <!-- As mentioned above, this is a scoped style tag so that it only applies to this module -->

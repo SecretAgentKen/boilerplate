@@ -1,11 +1,11 @@
-// This is designed to be a Vue mixin. It provides all of the API calls to the server. The values in the "methods" object will be 
-// merged with any existing "methods" in each Vue object mixing this in. See the Vue mixin documentation for more information.
+// This is designed to be a Vue composable. It provides all of the API calls to the server. The values returned from here are simple functions
+// to fetch and return data. Composables would typically include other Vue-specific calls but we don't need them in this simple a case.
 // This makes use of fetch (see the MDN on fetch for details)
 // The jsonFetch call acts as a wrapper around it and returns the JSON data coming from any particular call, and expects to send
 // JSON as the body.
 
-export default {
-	methods: {
+export function useServerApi() {
+	return {
 		apiCreateNote(title) {
 			return post('/notes', { title: title });
 		},
@@ -19,8 +19,8 @@ export default {
 		apiDeleteNote(note) {
 			return del('/notes', note);
 		}
-	}
-};
+	};
+}
 
 function post(url, obj) {
 	return jsonFetch(url, 'POST', obj);

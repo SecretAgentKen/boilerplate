@@ -1,6 +1,6 @@
 # Boilerplate
 
-*This is an example for Vue 2 - If you want to see Vue 3 using the Composition API check out the vue3 branch*
+*This is an example for Vue 3 - If you want to see Vue 2 using the Options API check out the trunk branch*
 
 This is an example project for playing with Vue, Express, document stores, and other modern web development tools. It's meant to be a structured learning tool so that you have a working base application to use rather than just running "Hello World" style applications. If you're new to web development or the last time you worked on a website was with the *LAMP* stack, see the references at the bottom of this file first.
 
@@ -20,7 +20,7 @@ The server is an ExpressJS server found in `app.js`, the only file necessary for
 
 ## UI
 
-The UI is a single-paged website. VueJS provides the data-binding framework while Bootstrap provides the look and feel. Vuex is used for state management. Webpack is used to generate all the assets from the HTML, CSS, JavaScript, and Vue components. The webpack configuration is found in `webpack.config.js`. The base HTML is located in `src/static/index.html` and the entry point for the JavaScript is in `src/ui.js`. The `ui.js` file then references a mixin in `src/helpers` as well as a number of Vue single-file-components (SFCs) in `src/components`. When webpack is finished, the results are put into the `public` folder with the server application hosts.
+The UI is a single-paged website. VueJS provides the data-binding framework while Bootstrap provides the look and feel. In Vue 2, vuex was used for state management however with Vue 3, Vue's internals can provide basic state management without need for a 3rd party tool. Webpack is used to generate all the assets from the HTML, CSS, JavaScript, and Vue components. The webpack configuration is found in `webpack.config.js`. The base HTML is located in `src/static/index.html` and the entry point for the JavaScript is in `src/ui.js`. The `ui.js` file then references a mixin in `src/helpers` as well as a number of Vue single-file-components (SFCs) in `src/components`. When webpack is finished, the results are put into the `public` folder with the server application hosts.
 
 # Making Changes
 
@@ -70,7 +70,7 @@ HINT: Different options. Refactor so that the filtered notes are now in the stat
 
 Add a button to the sidebar that will delete all notes.
 
-HINT: Add a new route to `app.js`, an entry for it in `mixinServerApi.js`, a button to `SidePanel.vue`, and then update the store.
+HINT: Add a new route to `app.js`, an entry for it in `composableServerApi.js`, a button to `SidePanel.vue`, and then update the store.
 
 ## Refactor out the $loki id
 
@@ -82,8 +82,7 @@ HINT: Loki doesn't allow you to rename the id, but that doesn't stop you from ad
 
 * [Learn Web Development MDN](https://developer.mozilla.org/en-US/docs/Learn) - Start Here / Everything Web
 * [NodeJS Intro](https://nodejs.dev/learn) - Introduction to NodeJS
-* [VueJS Guide](https://vuejs.org/v2/guide/) - Guide to Vue and data-binding
-* [Vuex](https://vuex.vuejs.org/) - Vue's state management
+* [VueJS Guide](https://vuejs.org/guide/) - Guide to Vue and data-binding
 * [ExpressJS](https://expressjs.com/) - HTTP server based on Node
 * [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) - UI toolkit for CSS and JavaScript components with a consistent look and feel
 * [Bootstrap Icons](https://icons.getbootstrap.com/) - Icon library

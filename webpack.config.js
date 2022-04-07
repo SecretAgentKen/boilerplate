@@ -11,6 +11,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 // This plugin allows us to copy static assets from our src to the public directory without having to process them. 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 
 module.exports = {
 	//  See webpack for configuration differences between 'development' and 'production'
@@ -37,7 +38,7 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: [
-					'vue-style-loader',
+					'style-loader',
 					'css-loader'
 				]
 			}
@@ -45,6 +46,10 @@ module.exports = {
 	},
 	plugins: [
 		// Here we initialize all of the plugins we intend to use. See their documentation for more details.
+		new DefinePlugin({
+			__VUE_OPTIONS_API__: true,
+			__VUE_PROD_DEVTOOLS__: false
+		}),
 		new VueLoaderPlugin(),
 		// Initialize eslint (which will use our eslintrc), apply it to our js and vue files, and auto-fix any issues if they can be fixed.
 		new ESLintPlugin({ fix: true, extensions: ['js', 'vue'] }),
