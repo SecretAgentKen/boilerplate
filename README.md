@@ -1,5 +1,7 @@
 # Boilerplate
 
+*This is an example for Vue 2 - If you want to see Vue 3 using the Composition API check out the vue3 branch*
+
 This is an example project for playing with Vue, Express, document stores, and other modern web development tools. It's meant to be a structured learning tool so that you have a working base application to use rather than just running "Hello World" style applications. If you're new to web development or the last time you worked on a website was with the *LAMP* stack, see the references at the bottom of this file first.
 
 # Getting Started
